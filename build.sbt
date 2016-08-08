@@ -46,7 +46,9 @@ lazy val service = Project(
     name := "notification-service",
     version := "0.0.1",
     isSnapshot := true,
-    libraryDependencies ++= Seq()
+    libraryDependencies ++= Seq(
+      "com.typesafe" % "config" % "1.3.0"
+    )
   ))
   .aggregate(template, scheduler, email, push, sms)
   .settings(
