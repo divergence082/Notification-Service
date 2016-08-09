@@ -1,4 +1,7 @@
 
+
+lazy val finchVersion = "0.11.0-M2"
+
 lazy val publishSettings = Seq(
   publishMavenStyle := true,
   publishTo := {
@@ -47,7 +50,9 @@ lazy val service = Project(
     version := "0.0.1",
     isSnapshot := true,
     libraryDependencies ++= Seq(
-      "com.typesafe" % "config" % "1.3.0"
+      "com.typesafe" % "config" % "1.3.0",
+      "com.github.finagle" %% "finch-core" % finchVersion,
+      "com.github.finagle" %% "finch-jackson" % finchVersion
     )
   ))
   .aggregate(template, scheduler, email, push, sms)
