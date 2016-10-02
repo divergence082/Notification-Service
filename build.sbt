@@ -1,7 +1,5 @@
 
 
-lazy val finchVersion = "0.11.0-M2"
-
 lazy val publishSettings = Seq(
   publishMavenStyle := true,
   publishTo := {
@@ -49,113 +47,8 @@ lazy val service = Project(
     name := "notification-service",
     version := "0.0.1",
     isSnapshot := true,
-    libraryDependencies ++= Seq(
-      "com.typesafe" % "config" % "1.3.0",
-      "com.github.finagle" %% "finch-core" % finchVersion,
-      "com.github.finagle" %% "finch-jackson" % finchVersion
-    )
+    libraryDependencies ++= Seq()
   ))
-  .aggregate(template, scheduler, email, push, sms)
-  .settings(
-    scalastyleConfig in Compile := baseDirectory.value / "project" / "scalastyle-config.xml",
-    scalastyleConfig in Test := baseDirectory.value / "project" / "scalastyle-config.xml"
-  )
-
-
-lazy val template =
-  Project(
-    id = "template",
-    base = file("template"),
-    settings = projectSettings ++
-      Seq(
-        name := "notification-service-template",
-        version := "0.0.1",
-        isSnapshot := true,
-        libraryDependencies ++= Seq(),
-        publish := {},
-        publishLocal := {}
-      )
-  )
-  .settings(
-    scalastyleConfig in Compile := baseDirectory.value / "project" / "scalastyle-config.xml",
-    scalastyleConfig in Test := baseDirectory.value / "project" / "scalastyle-config.xml"
-  )
-
-
-lazy val scheduler =
-  Project(
-    id = "scheduler",
-    base = file("scheduler"),
-    settings = projectSettings ++
-      Seq(
-        name := "notification-service-scheduler",
-        version := "0.0.1",
-        isSnapshot := true,
-        libraryDependencies ++= Seq(),
-        publish := {},
-        publishLocal := {}
-      )
-  )
-  .settings(
-    scalastyleConfig in Compile := baseDirectory.value / "project" / "scalastyle-config.xml",
-    scalastyleConfig in Test := baseDirectory.value / "project" / "scalastyle-config.xml"
-  )
-
-
-lazy val email =
-  Project(
-    id = "email",
-    base = file("email"),
-    settings = projectSettings ++
-      Seq(
-        name := "notification-service-email",
-        version := "0.0.1",
-        isSnapshot := true,
-        libraryDependencies ++= Seq(),
-        publish := {},
-        publishLocal := {}
-      )
-  )
-  .settings(
-    scalastyleConfig in Compile := baseDirectory.value / "project" / "scalastyle-config.xml",
-    scalastyleConfig in Test := baseDirectory.value / "project" / "scalastyle-config.xml"
-  )
-
-
-lazy val push =
-  Project(
-    id = "push",
-    base = file("push"),
-    settings = projectSettings ++
-      Seq(
-        name := "notification-service-push",
-        version := "0.0.1",
-        isSnapshot := true,
-        libraryDependencies ++= Seq(),
-        publish := {},
-        publishLocal := {}
-      )
-  )
-  .settings(
-    scalastyleConfig in Compile := baseDirectory.value / "project" / "scalastyle-config.xml",
-    scalastyleConfig in Test := baseDirectory.value / "project" / "scalastyle-config.xml"
-  )
-
-
-lazy val sms =
-  Project(
-    id = "sms",
-    base = file("sms"),
-    settings = projectSettings ++
-      Seq(
-        name := "notification-service-sms",
-        version := "0.0.1",
-        isSnapshot := true,
-        libraryDependencies ++= Seq(),
-        publish := {},
-        publishLocal := {}
-      )
-  )
   .settings(
     scalastyleConfig in Compile := baseDirectory.value / "project" / "scalastyle-config.xml",
     scalastyleConfig in Test := baseDirectory.value / "project" / "scalastyle-config.xml"
