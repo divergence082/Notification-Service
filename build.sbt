@@ -1,5 +1,11 @@
 
 
+lazy val projectSettings = Seq(
+  organization := "space.divergence",
+  version := "0.1.0-SNAPSHOT",
+  scalaVersion := "2.12.6"
+)
+
 lazy val publishSettings = Seq(
   publishMavenStyle := true,
   publishTo := {
@@ -34,22 +40,16 @@ lazy val publishSettings = Seq(
       </developers>)
 )
 
-lazy val projectSettings = Defaults.coreDefaultSettings ++
-  Seq(
-    organization := "space.divergence",
-    scalaVersion := "2.11.8"
-  )
+lazy val scalastyleSettings = Seq(
+  scalastyleConfig in Compile := baseDirectory.value / "project" / "scalastyle-config.xml",
+  scalastyleConfig in Test := baseDirectory.value / "project" / "scalastyle-config.xml"
+)
 
-lazy val service = Project(
-  id = "service",
-  base = file("service"),
-  settings = projectSettings ++ publishSettings ++ Seq(
-    name := "notification-service",
-    version := "0.0.1",
-    isSnapshot := true,
-    libraryDependencies ++= Seq()
-  ))
-  .settings(
-    scalastyleConfig in Compile := baseDirectory.value / "project" / "scalastyle-config.xml",
-    scalastyleConfig in Test := baseDirectory.value / "project" / "scalastyle-config.xml"
-  )
+lazy val root = (project in file("."))
+  .aggregate(service, sms)
+
+lazy val service = (project in file("service"))
+  .settings(projectSettings, publishSettings, scalastyleSettings)
+
+lazy val sms = (project in file("sms"))
+  .settings(projectSettings, publishSettings, scalastyleSettings)
