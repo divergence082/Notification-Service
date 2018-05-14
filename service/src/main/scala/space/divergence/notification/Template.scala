@@ -1,12 +1,6 @@
 package space.divergence.notification
 
 
-trait Message
-
-trait Address
-
-trait Data
-
-trait Template {
+trait Template[Data, Message] {
   def render(data: Data): Message
 }

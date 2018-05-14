@@ -52,4 +52,9 @@ lazy val service = (project in file("service"))
   .settings(projectSettings, publishSettings, scalastyleSettings)
 
 lazy val sms = (project in file("sms"))
-  .settings(projectSettings, publishSettings, scalastyleSettings)
+  .settings(projectSettings, publishSettings, scalastyleSettings,
+    libraryDependencies ++= Seq(
+      "com.twitter" %% "finagle-http" % "18.5.0"
+    )
+  )
+  .dependsOn(service)
