@@ -1,20 +1,30 @@
 package space.divergence.notification.sms
 
+import java.net.URLEncoder
+
 import com.twitter.finagle.{Http, Service, http}
-import space.divergence.notification.{Transport => NotificationTransport}
 
 import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
+import space.divergence.notification.{Transport => NotificationTransport}
 
+class Transport(url: String, apiKey: String) extends NotificationTransport[Address, Text] {
 
-class Transport(url: String, apiKey: String) extends NotificationTransport[Address, Message] {
+  import space.divergence.notification.TwitterConversions.RichTwitterFuture
 
-  import space.divergence.notification.sms.TwitterConversions.RichTwitterFuture
+  private val client: Service[http.Request, http.Response] = Http.client.newService(url)
 
-  private val client: Service[http.Request, http.Response] =
-    Http.newService(url)
+  override def send(address: Address, message: Text): Future[Unit] = {
+    val request = http.Request(
+      http.Method.Get,
+      s"/api.php?" +
+        s"send=${URLEncoder.encode(message, "UTF-8")}&" +
+        s"to=${URLEncoder.encode(address, "UTF-8")}&" +
+        s"apikey=$apiKey"
+    )
+    request.host(address.split(":").head)
 
-  override def send(address: Address, message: Message): Future[Unit] = {
-    client(http.Request(http.Method.Get, s"$url?send=$message&to=$address&apikey=$apiKey"))
+    client(request)
       .map(_ => ())
       .asScala
   }

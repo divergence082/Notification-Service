@@ -1,5 +1,7 @@
 
 
+lazy val finagleVersion = "18.5.0"
+
 lazy val projectSettings = Seq(
   organization := "space.divergence",
   version := "0.1.0-SNAPSHOT",
@@ -46,7 +48,7 @@ lazy val scalastyleSettings = Seq(
 )
 
 lazy val root = (project in file("."))
-  .aggregate(service, sms)
+  .aggregate(service)
 
 lazy val service = (project in file("service"))
   .settings(projectSettings, publishSettings, scalastyleSettings)
@@ -54,7 +56,7 @@ lazy val service = (project in file("service"))
 lazy val sms = (project in file("sms"))
   .settings(projectSettings, publishSettings, scalastyleSettings,
     libraryDependencies ++= Seq(
-      "com.twitter" %% "finagle-http" % "18.5.0"
+      "com.twitter" %% "finagle-http" % finagleVersion
     )
   )
   .dependsOn(service)
