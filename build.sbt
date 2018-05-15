@@ -48,7 +48,7 @@ lazy val scalastyleSettings = Seq(
 )
 
 lazy val root = (project in file("."))
-  .aggregate(service)
+  .aggregate(service, sms)
 
 lazy val service = (project in file("service"))
   .settings(projectSettings, publishSettings, scalastyleSettings)
